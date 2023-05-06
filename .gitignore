@@ -1,4 +1,6 @@
 *.o
 *.hex
 *.elf
-compile_flags.txt
+.include_paths.txt
+compile_commands.json
+.cache
