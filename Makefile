@@ -21,7 +21,6 @@ COMPILE_COMMANDS=compile_commands.json
 $(TARGET).hex : $(TARGET).elf
 	$(OBJCOPY) -O $(FORMAT) $< $@
 
-
 $(TARGET).elf: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@
 
