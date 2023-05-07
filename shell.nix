@@ -7,6 +7,8 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
     avr-cc
     avr-binutils
+
+    # avr programmer
     avrdude
 
     # contains the program clangd which is a LSP server for C
@@ -17,5 +19,8 @@ pkgs.mkShell {
 
     # used to add avr include paths to compile_commands.json
     jq
+
+    # serial console
+    picocom
   ];
 }

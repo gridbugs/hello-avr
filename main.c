@@ -32,7 +32,7 @@ void USART0_init( void ) {
 
 int main(void) {
     USART0_init();
-    printf("Hello, World\n");
+    printf("Hello, World!\r\n");
     while (1);
     return 0;
 }
