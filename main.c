@@ -30,9 +30,73 @@ void USART0_init( void ) {
     stdin  = &uartin;
 }
 
+typedef enum {
+    B,
+    C,
+    D,
+} port_t;
+
+typedef struct {
+    port_t port;
+    uint8_t bit;
+} led_t;
+
+#define N_LEDS 15
+led_t leds[N_LEDS] = {
+    { .port = D, .bit = 7 },
+    { .port = D, .bit = 6 },
+    { .port = D, .bit = 5 },
+    { .port = D, .bit = 4 },
+    { .port = D, .bit = 3 },
+    { .port = D, .bit = 2 },
+    { .port = B, .bit = 2 },
+    { .port = B, .bit = 1 },
+    { .port = B, .bit = 0 },
+    { .port = C, .bit = 5 },
+    { .port = C, .bit = 4 },
+    { .port = C, .bit = 3 },
+    { .port = C, .bit = 2 },
+    { .port = C, .bit = 1 },
+    { .port = C, .bit = 0 },
+};
+
+
+void led_on(led_t led) {
+    uint8_t mask = 1 << led.bit;
+    switch (led.port) {
+        case B:
+            PORTB |= mask;
+            break;
+        case C:
+            PORTC |= mask;
+            break;
+        case D:
+            PORTD |= mask;
+            break;
+    }
+}
+
+#define N_INDICES 3
+
 int main(void) {
     USART0_init();
     printf("Hello, World!\r\n");
-    while (1);
+    DDRB = 0xFF;
+    DDRC = 0xFF;
+    DDRD = 0xFF;
+    int indices[N_INDICES] = {0, 5, 10};
+    while (1) {
+        PORTB = 0x0;
+        PORTC = 0x0;
+        PORTD = 0x0;
+        for (int i = 0; i < N_INDICES; i++) {
+            led_on(leds[indices[i]]);
+            indices[i] = (indices[i] + 1) % N_LEDS;
+        }
+        uint32_t delay = 100000;
+        while (delay > 0) {
+            delay -= 1;
+        }
+    }
     return 0;
 }
