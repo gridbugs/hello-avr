@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <avr/io.h>
 
-#define BAUD 9600
-#define FOSC 16000000
-#define MYUBRR (FOSC/16/BAUD-1)
+// The arduino clock is 16Mhz and the USART0 divides this clock rate by 16
+#define USART0_CLOCK_HZ 1000000
+#define BAUD_RATE_HZ 9600
+#define UBRR_VALUE (USART0_CLOCK_HZ / BAUD_RATE_HZ)
 
 // Send a character over USART0.
 int USART0_tx(char data, struct __file* _f) {
@@ -17,10 +18,10 @@ int USART0_tx(char data, struct __file* _f) {
 static FILE uartout = FDEV_SETUP_STREAM(USART0_tx, NULL, _FDEV_SETUP_WRITE);
 
 void USART0_init( void ) {
-    UBRR0H = (MYUBRR >> 8) & 0xF;
-    UBRR0L = MYUBRR & 0xFF;
-    UCSR0B = 1 << TXEN0;
-    UCSR0C = (1 << USBS0) | (3 << UCSZ00);
+    UBRR0H = (UBRR_VALUE >> 8) & 0xF;
+    UBRR0L = UBRR_VALUE & 0xFF;
+    UCSR0B = 1 << TXEN0; // enable the USART0 transmitter
+    UCSR0C = 3 << UCSZ00; // use 8-bit characters
     stdout = &uartout;
 }
 
