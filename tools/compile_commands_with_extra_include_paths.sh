@@ -2,8 +2,8 @@
 set -euo pipefail
 
 # Script that prints a compilation database (typically stored in
-# compile_commands.json) which contains additional include paths
-# found by querying avr-gcc.
+# compile_commands.json) which contains additional include paths found by
+# querying avr-gcc.
 
 include_paths() {
     # Print custom include paths used by the avr compiler to stdout, one per line.
@@ -16,7 +16,8 @@ include_paths() {
 }
 
 compile_commands() {
-    # Print the compilation database that would normally go in compile_commands.json
+    # Print the compilation database that would normally go in
+    # compile_commands.json.
     # This would be simpler if bear supported printing to stdout:
     # https://github.com/rizsotto/Bear/issues/525
     TMP="$(mktemp -d)"
@@ -36,4 +37,5 @@ COMMA_SEPARATED_QUOTED_INCLUDE_ARGS=$(
 )
 
 # Add the extra include paths to the compilation database and print the result.
-compile_commands | jq "map(.arguments += [$COMMA_SEPARATED_QUOTED_INCLUDE_ARGS])"
+compile_commands | \
+    jq "map(.arguments += [$COMMA_SEPARATED_QUOTED_INCLUDE_ARGS])"
