@@ -18,8 +18,8 @@ int USART0_tx(char data, struct __file* _f) {
 static FILE uartout = FDEV_SETUP_STREAM(USART0_tx, NULL, _FDEV_SETUP_WRITE);
 
 void USART0_init( void ) {
-    UBRR0H = (UBRR_VALUE >> 8) & 0xF;
-    UBRR0L = UBRR_VALUE & 0xFF;
+    UBRR0H = (UBRR_VALUE >> 8) & 0xF; // set the high byte of the baud rate
+    UBRR0L = UBRR_VALUE & 0xFF; // set the low byte of the baud rate
     UCSR0B = 1 << TXEN0; // enable the USART0 transmitter
     UCSR0C = 3 << UCSZ00; // use 8-bit characters
     stdout = &uartout;
