@@ -17,9 +17,6 @@ FORMAT=ihex
 TOOLS_DIR=tools
 COMPILE_COMMANDS=compile_commands.json
 
-$(TARGET).hex : $(TARGET).elf
-	$(OBJCOPY) -O $(FORMAT) $< $@
-
 $(TARGET).elf: $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $@
 
@@ -27,7 +24,7 @@ $(TARGET).elf: $(OBJ)
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean: 
-	rm -rf *.o *.elf *.hex
+	rm -rf *.o *.elf
 
 $(COMPILE_COMMANDS):
 	$(TOOLS_DIR)/compile_commands_with_extra_include_paths.sh > $@
