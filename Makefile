@@ -11,9 +11,6 @@ MCU=atmega328p
 # ...which is incorrectly reported in some versions of gcc
 CFLAGS=-mmcu=$(MCU) -std=c99 -Werror -Wall --param=min-pagesize=0
 
-OBJCOPY=avr-objcopy
-FORMAT=ihex
-
 TOOLS_DIR=tools
 COMPILE_COMMANDS=compile_commands.json
 
