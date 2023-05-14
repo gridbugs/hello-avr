@@ -1,5 +1,9 @@
 # Hello AVR
 
+Program that prints "Hello, World!" over USART. Works with both the USB
+port on Arduino boards and directly connecting a USB to UART adapter to
+the TX and RX pins.
+
 ## Useful Commands
 
 ### Flash an Arduino Nano
